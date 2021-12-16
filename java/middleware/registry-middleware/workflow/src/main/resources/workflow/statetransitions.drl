@@ -1,0 +1,60 @@
+package io.opensaber.workflow;
+import io.opensaber.workflow.StateContext;
+import io.opensaber.pojos.attestation.States;
+
+dialect  "mvel"
+global io.opensaber.keycloak.KeycloakAdminUtil keycloakAdminUtil;
+global io.opensaber.workflow.RuleEngineService ruleEngineService;
+
+rule "Set state as draft if there is a change"
+    when
+        stateDefinition:StateContext(isAttestationProperty() && isModified() && !isAttestationRequested());
+    then
+        stateDefinition.setState(States.DRAFT);
+end
+
+rule "Send for attestation and Set state as attestation requested"
+    when
+        stateDefinition:StateContext(isAttestationProperty() && isAttestationRequested());
+    then
+        stateDefinition.setState(States.ATTESTATION_REQUESTED);
+        stateDefinition.setClaimId();
+end
+
+rule "Set state as Published when Claim is approved"
+    when
+        stateDefinition:StateContext(isAttestationProperty() && isClaimApproved());
+    then
+        stateDefinition.setState(States.PUBLISHED);
+        stateDefinition.setAttestationData();
+end
+
+rule "Set state as Rejected when Claim is rejected"
+    when
+        stateDefinition:StateContext(isAttestationProperty() && isClaimRejected());
+    then
+        stateDefinition.setState(States.REJECTED);
+end
+
+rule "Create entity owner for newly added owner fields"
+    when
+        stateDefinition:StateContext(isOwnershipProperty() && isOwnerNewlyAdded() && isLoginEnabled());
+    then
+        String owner = keycloakAdminUtil.createUser(stateDefinition.getEntityName(), stateDefinition.getUpdated().get("userId").textValue(),
+        stateDefinition.getUpdated().get("email").textValue(), stateDefinition.getUpdated().get("mobile").textValue());
+        stateDefinition.addOwner(owner);
+end
+
+rule "Revert if any modification to ownership details"
+    when
+        stateDefinition:StateContext(isOwnershipProperty() && !isOwnerNewlyAdded() && isOwnershipDetailsUpdated());
+    then
+        ruleEngineService.revertOwnershipDetails(stateDefinition);
+end
+
+rule "Revert if any modifications to system fields"
+    when
+        stateDefinition:StateContext(revertSystemFieldsChangedEnabled());
+    then
+        ruleEngineService.revertSystemFields(stateDefinition);
+end
