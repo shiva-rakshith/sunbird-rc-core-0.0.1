@@ -314,7 +314,7 @@ public class RegistryHelperTest {
         when(definitionsManager.getDefinition(INSTITUTE))
                 .thenReturn(new Definition(new ObjectMapper().readTree("{\"title\":\"Institute\",\"definitions\":{\"Institute\":{\"$id\":\"#\\/properties\\/Institute\",\"title\":\"The Institute Schema\",\"required\":[],\"properties\":{\"contactNumber\":{\"$id\":\"#\\/properties\\/contactNumber\",\"type\":\"string\",\"title\":\"Landline \\/ Mobile\"},\"email\":{\"$id\":\"#\\/properties\\/email\",\"type\":\"string\",\"format\":\"email\",\"title\":\"Email\"}}}},\"_osConfig\":{\"privateFields\":[],\"signedFields\":[],\"indexFields\":[],\"uniqueIndexFields\":[],\"systemFields\":[\"osCreatedAt\",\"osUpdatedAt\",\"osCreatedBy\",\"osUpdatedBy\"],\"attestationPolicies\":[],\"subjectJsonPath\":\"email\",\"ownershipAttributes\":[{\"email\":\"\\/email\",\"mobile\":\"\\/contactNumber\",\"userId\":\"\\/email\"},{\"email\":\"\\/adminEmail\",\"mobile\":\"\\/adminMobile\",\"userId\":\"\\/adminEmail\"}]}}")));
         String testUserId = "be6d30e9-7c62-4a05-b4c8-ee28364da8e4";
-        when(keycloakAdminUtil.createUser(any(), any(), any(), any())).thenReturn(testUserId);
+        when(keycloakAdminUtil.createUser(any(), any(), any(), any(), any())).thenReturn(testUserId);
         when(registryService.addEntity(any(), any(), any())).thenReturn(UUID.randomUUID().toString());
         when(shardManager.getShard(any())).thenReturn(new Shard());
         registryHelper.inviteEntity(inviteJson, "");
@@ -332,7 +332,7 @@ public class RegistryHelperTest {
         when(definitionsManager.getDefinition(INSTITUTE))
                 .thenReturn(new Definition(new ObjectMapper().readTree("{\"title\":\"Institute\",\"definitions\":{\"Institute\":{\"$id\":\"#\\/properties\\/Institute\",\"title\":\"The Institute Schema\",\"required\":[],\"properties\":{\"contactNumber\":{\"$id\":\"#\\/properties\\/contactNumber\",\"type\":\"string\",\"title\":\"Landline \\/ Mobile\"},\"email\":{\"$id\":\"#\\/properties\\/email\",\"type\":\"string\",\"format\":\"email\",\"title\":\"Email\"}}}},\"_osConfig\":{\"privateFields\":[],\"signedFields\":[],\"indexFields\":[],\"uniqueIndexFields\":[],\"systemFields\":[\"osCreatedAt\",\"osUpdatedAt\",\"osCreatedBy\",\"osUpdatedBy\"],\"attestationPolicies\":[],\"subjectJsonPath\":\"email\",\"ownershipAttributes\":[{\"email\":\"\\/email\",\"mobile\":\"\\/contactNumber\",\"userId\":\"\\/email\"},{\"email\":\"\\/adminEmail\",\"mobile\":\"\\/adminMobile\",\"userId\":\"\\/adminEmail\"}]}}")));
         String testUserId = "be6d30e9-7c62-4a05-b4c8-ee28364da8e4";
-        when(keycloakAdminUtil.createUser(any(), any(), any(), any())).thenReturn(testUserId);
+        when(keycloakAdminUtil.createUser(any(), any(), any(), any(), any())).thenReturn(testUserId);
         when(registryService.addEntity(any(), any(), any())).thenReturn(UUID.randomUUID().toString());
         when(shardManager.getShard(any())).thenReturn(new Shard());
         registryHelper.inviteEntity(inviteJson, "");
@@ -356,7 +356,7 @@ public class RegistryHelperTest {
         when(definitionsManager.getDefinition(INSTITUTE))
                 .thenReturn(new Definition(new ObjectMapper().readTree("{\"title\":\"Institute\",\"definitions\":{\"Institute\":{\"$id\":\"#\\/properties\\/Institute\",\"title\":\"The Institute Schema\",\"required\":[],\"properties\":{\"contactNumber\":{\"$id\":\"#\\/properties\\/contactNumber\",\"type\":\"string\",\"title\":\"Landline \\/ Mobile\"},\"email\":{\"$id\":\"#\\/properties\\/email\",\"type\":\"string\",\"format\":\"email\",\"title\":\"Email\"}}}},\"_osConfig\":{\"privateFields\":[],\"signedFields\":[],\"indexFields\":[],\"uniqueIndexFields\":[],\"systemFields\":[\"osCreatedAt\",\"osUpdatedAt\",\"osCreatedBy\",\"osUpdatedBy\"],\"attestationPolicies\":[],\"subjectJsonPath\":\"email\",\"ownershipAttributes\":[{\"email\":\"\\/email\",\"mobile\":\"\\/contactNumber\",\"userId\":\"\\/email\"},{\"email\":\"\\/adminEmail\",\"mobile\":\"\\/adminMobile\",\"userId\":\"\\/adminEmail\"}]}}")));
         String testUserId = "be6d30e9-7c62-4a05-b4c8-ee28364da8e4";
-        when(keycloakAdminUtil.createUser(any(), any(), any(), any())).thenReturn(testUserId);
+        when(keycloakAdminUtil.createUser(any(), any(), any(), any(), any())).thenReturn(testUserId);
         when(registryService.addEntity(any(), any(), any())).thenReturn(UUID.randomUUID().toString());
         when(shardManager.getShard(any())).thenReturn(new Shard());
         registryHelper.inviteEntity(inviteJson, "");

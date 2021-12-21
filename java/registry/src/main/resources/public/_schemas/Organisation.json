@@ -35,7 +35,10 @@
                 "type":"string"
              },
              "roles":{
-                "type":"string"
+                "type":"array",
+                "items":{
+                   "type":"string"
+                }
              },
              "address":{
                 "$ref":"#/definitions/Address"

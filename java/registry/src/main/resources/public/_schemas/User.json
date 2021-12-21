@@ -40,7 +40,10 @@
           "format":"email"
         },
         "roles":{
-          "type":"string"
+          "type":"array",
+          "items":{
+            "type":"string"
+          }
         },
         "tenant":{
           "type":"string"
