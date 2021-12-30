@@ -192,9 +192,9 @@ keycloak:
   resource: ${sunbird_sso_client_id:client}
 keycloak-admin:
   client-id: ${sunbird_sso_admin_client_id:admin-api}
-  client-secret: ${sunbird_sso_admin_client_secret:b62b3723-eb95-4ca3-a0fb-156701beaa1b}
+  client-secret: ${sunbird_sso_admin_client_secret:6d2f8dec-b49b-4bbc-ae28-1b00a6798425}
 keycloak-user:
-  default-password: opensaber@123
+  default-password: Opensaber@123
 claims:
   url: ${claims_url:http://localhost:8082}
 authentication:
