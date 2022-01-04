@@ -24,7 +24,7 @@ node('java11') {
               sh """
                 cd ${env.WORKSPACE}/java/registry
                 pwd
-                /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination ${env.DOCKER_HUB_URL}/registry:${build_tag}
+                /kaniko/executor --dockerfile Dockerfile --context `pwd` --destination ${env.DOCKER_HUB_URL}/hcx-registry:${build_tag}
                 echo {\\"image_name\\" : \\"registry\\", \\"image_tag\\" : \\"${build_tag}\\"} > ${env.WORKSPACE}/metadata.json
               """
               archiveArtifacts "metadata.json"
