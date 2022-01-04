@@ -16,17 +16,17 @@
       "type":"object",
       "title":"The User Schema",
       "required":[
-        "user_id",
-        "user_name",
+        "userId",
+        "userName",
         "roles",
         "tenant",
-        "organisation_details"
+        "organisationDetails"
       ],
       "properties":{
-        "user_id":{
+        "userId":{
           "type":"string"
         },
-        "user_name":{
+        "userName":{
           "type":"string"
         },
         "pin":{
@@ -48,26 +48,26 @@
         "tenant":{
           "type":"string"
         },
-        "linked_user_id":{
+        "linkedUserId":{
           "type":"string"
         },
-        "organisation_details":{
-            "$ref":"#/definitions/organisation_details"
+        "organisationDetails":{
+            "$ref":"#/definitions/organisationDetails"
         }
       }
     },
-    "organisation_details":{
-      "title":"organisation_details",
+    "organisationDetails":{
+      "title":"organisationDetails",
       "type":"object",
       "required":[
-        "organisation_name",
-        "organisation_osid"
+        "organisationName",
+        "organisationOSID"
       ],
       "properties":{
-        "organisation_name":{
+        "organisationName":{
           "type":"string"
         },
-        "organisation_osid":{
+        "organisationOSID":{
           "type":"string"
         }
       }
@@ -78,24 +78,24 @@
       {
         "email":"/email",
         "mobile":"/mobile",
-        "userId":"/email"
+        "userId":"/userId"
       }
     ],
     "uniqueIndexFields":[
-      "email"
+      "userId"
     ],
-    "subjectJsonPath":"email",
+    "subjectJsonPath":"userId",
     "attestationAttributes": [
-      "organisation_details"
+      "organisationDetails"
     ],
     "attestationPolicies":[
       {
-        "property": "organisation_details",
+        "property": "organisationDetails",
         "paths": [
-          "organisation_details"
+          "organisationDetails"
         ],
         "attestorEntity": "Organisation",
-        "conditions": "(ATTESTOR#$.osid#.contains(REQUESTER#$.organisation_osid#) && ATTESTOR#$.participant_name#.contains(REQUESTER#$.organisation_name#))"
+        "conditions": "(ATTESTOR#$.osid#.contains(REQUESTER#$.organisationOSID#) && ATTESTOR#$.participantName#.contains(REQUESTER#$.organisationName#))"
       }
     ]
   }
