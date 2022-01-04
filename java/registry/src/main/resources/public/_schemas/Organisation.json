@@ -100,7 +100,15 @@
             "payment_details":{
                "$ref":"#/definitions/payment_details"
             }
-         }
+         },
+         "allOf": [
+            {
+               "properties": {
+                  "roles": { "contains": { "const": "payor"} }
+               },
+               "required": ["scheme_code"]
+            }
+         ]
       },
       "Address":{
          "title": "Address",
