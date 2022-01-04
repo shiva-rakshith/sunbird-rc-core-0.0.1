@@ -19,10 +19,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Component
@@ -79,6 +76,7 @@ public class KeycloakAdminUtil {
             String userID = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
             logger.info("User ID : " + userID);
             addRolesToUser(roles, userID);
+            usersResource.get(userID).executeActionsEmail(Arrays.asList("UPDATE_PASSWORD"));
             return userID;
         } else if (response.getStatus() == 409) {
             logger.info("UserID: {} exists", userName);
