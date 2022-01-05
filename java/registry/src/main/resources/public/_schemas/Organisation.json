@@ -45,7 +45,7 @@
                "default": "default"
             },
             "address":{
-               "$ref":"#/definitions/Address"
+               "$ref":"#/definitions/address"
             },
             "primary_email":{
                "type":"string",
@@ -98,12 +98,38 @@
                "format":"url"
             },
             "payment_details":{
-               "$ref":"#/definitions/payment_details"
+               "type":"object",
+               "required":[
+
+               ],
+               "properties":{
+                  "upi_id":{
+                     "type":"string"
+                  },
+                  "account_number":{
+                     "type":"string"
+                  },
+                  "ifsc_code":{
+                     "type":"string"
+                  }
+               },
+               "oneOf":[
+                  {
+                     "required":[
+                        "upi_id"
+                     ]
+                  },
+                  {
+                     "required":[
+                        "account_number",
+                        "ifsc_code"
+                     ]
+                  }
+               ]
             }
          }
       },
-      "Address":{
-         "title": "Address",
+      "address":{
          "type":"object",
          "required":[
 
@@ -131,37 +157,6 @@
                "type":"string"
             }
          }
-      },
-      "payment_details":{
-         "title": "payment_details",
-         "type":"object",
-         "required":[
-
-         ],
-         "properties":{
-            "upi_id":{
-               "type":"string"
-            },
-            "account_number":{
-               "type":"string"
-            },
-            "ifsc_code":{
-               "type":"string"
-            }
-         },
-         "oneOf":[
-            {
-               "required":[
-                  "upi_id"
-               ]
-            },
-            {
-               "required":[
-                  "account_number",
-                  "ifsc_code"
-               ]
-            }
-         ]
       }
    },
    "_osConfig":{
