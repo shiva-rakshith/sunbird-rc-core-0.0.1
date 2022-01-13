@@ -171,7 +171,6 @@
          "participant_name",
          "primary_email"
       ],
-      "subjectJsonPath": "participant_name",
-      "inviteRoles":["anonymous"]
+      "subjectJsonPath": "participant_name"
    }
 }
