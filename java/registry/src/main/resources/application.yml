@@ -92,6 +92,10 @@ database:
   # If this property not provided, advisor is set to DefaultShardAdvisor
   shardAdvisorClassName: io.opensaber.registry.sink.shard.DefaultShardAdvisor
 
+  # To enable/disable sharding, If false, shardLabel(example: '1-')
+  # will not be added as prefix to record identifier
+  enableSharding: false
+
   connectionInfo:
     -
       # shardId, shardlabel must be a unique identifier to each connection.
@@ -188,11 +192,11 @@ audit:
 keycloak:
   #publicKey:  ${sunbird_sso_publickey:pk}
   auth-server-url: ${sunbird_sso_url:http://localhost:8080/auth}
-  realm: ${sunbird_sso_realm:sunbird-rc}
+  realm: ${sunbird_sso_realm:swasth-health-claim-exchange}
   resource: ${sunbird_sso_client_id:client}
 keycloak-admin:
   client-id: ${sunbird_sso_admin_client_id:admin-api}
-  client-secret: ${sunbird_sso_admin_client_secret:6d2f8dec-b49b-4bbc-ae28-1b00a6798425}
+  client-secret: ${sunbird_sso_admin_client_secret:ae85bbf8-27c3-4a45-a283-ac1f428b6223}
 keycloak-user:
   default-password: Opensaber@123
 claims:
