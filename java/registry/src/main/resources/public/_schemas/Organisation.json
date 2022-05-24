@@ -16,7 +16,6 @@
          "type":"object",
          "title":"The Organisation Schema",
          "required":[
-            "participant_code",
             "participant_name",
             "roles",
             "primary_mobile",
@@ -25,9 +24,6 @@
             "endpoint_url"
          ],
          "properties":{
-            "participant_code":{
-               "type":"string"
-            },
             "participant_name":{
                "type":"string"
             },
@@ -172,8 +168,9 @@
          }
       ],
       "uniqueIndexFields":[
-         "participant_code",
+         "participant_name",
          "primary_email"
-      ]
+      ],
+      "subjectJsonPath": "participant_name"
    }
 }
