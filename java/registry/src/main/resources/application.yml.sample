@@ -75,6 +75,14 @@ database:
   #       existing data in the database.
   uuidPropertyName: ${database_uuidPropertyName:osid}
 
+  # Instead of uuid, we can enable to use custom property value as a unique record identifier
+  enableCustomIdentifier: ${database_enableCustomIdentifier:false}
+  customPropertyName: ${database_customPropertyName:participant_code}
+
+  # To enable/disable sharding, If false, shardLabel(example: '1-')
+  # will not be added as prefix to record identifier
+  enableSharding: ${database_enableSharding:true}
+
   # Providers available are NEO4J, SQLG, CASSANDRA, ORIENTDB, TINKERGRAPH (in-memory).
   # NOTE: Values given against 'shardId' must be unique
   provider: ${database_provider:SQLG}

@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -102,9 +102,9 @@ public class EntityStateHelperTest {
         HashMap<String, Object> mockRaiseClaimResponse = new HashMap<>();
         mockRaiseClaimResponse.put("id", "raised_claim_id");
 
-        when(conditionResolverService.resolve(ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
+        when(conditionResolverService.resolve(any(), any(), any(), any()))
                 .thenReturn("");
-        when(claimRequestClient.riseClaimRequest(ArgumentMatchers.any()))
+        when(claimRequestClient.riseClaimRequest(any()))
                 .thenReturn(mockRaiseClaimResponse);
         String notes = "";
         assertEquals(test.get("expected"), entityStateHelper.sendForAttestation(test.get("existing"), propertyURI, notes));
@@ -113,21 +113,21 @@ public class EntityStateHelperTest {
 
     @Test
     public void shouldCreateNewOwnersForNewlyAddedOwnerFields() throws IOException, DuplicateRecordException, EntityCreationException, OwnerCreationException {
-        when(keycloakAdminUtil.createUser(anyString(), anyString(), anyString(), anyString())).thenReturn("456");
+        when(keycloakAdminUtil.createUser(anyString(), anyString(), anyString(), anyString(), any())).thenReturn("456");
         JsonNode test = m.readTree(new File(TEST_DIR + "shouldAddNewOwner.json"));
         runTest(test.get("existing"), test.get("updated"), test.get("expected"));
     }
 
     @Test
     public void shouldNotCreateNewOwners() throws IOException, DuplicateRecordException, EntityCreationException, OwnerCreationException {
-        when(keycloakAdminUtil.createUser(anyString(), anyString(), anyString(), anyString())).thenReturn("456");
+        when(keycloakAdminUtil.createUser(anyString(), anyString(), anyString(), anyString(), any())).thenReturn("456");
         JsonNode test = m.readTree(new File(TEST_DIR + "shouldNotAddNewOwner.json"));
         runTest(test.get("existing"), test.get("updated"), test.get("expected"));
     }
 
     @Test
     public void shouldNotModifyExistingOwners() throws IOException, DuplicateRecordException, EntityCreationException, OwnerCreationException {
-        when(keycloakAdminUtil.createUser(anyString(), anyString(), anyString(), anyString())).thenReturn("456");
+        when(keycloakAdminUtil.createUser(anyString(), anyString(), anyString(), anyString(), any())).thenReturn("456");
         JsonNode test = m.readTree(new File(TEST_DIR + "shouldNotModifyExistingOwner.json"));
         runTest(test.get("existing"), test.get("updated"), test.get("expected"));
     }

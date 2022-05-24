@@ -16,6 +16,7 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,6 +32,10 @@ public class VertexWriter {
     private DatabaseProvider databaseProvider;
     private String parentOSid;
     private static final String EMPTY_STR = "";
+    @Value("${database.enableCustomIdentifier}")
+    private boolean enableCustomIdentifier;
+    @Value("${database.customPropertyName}")
+    private String customPropertyName;
 
     private Logger logger = LoggerFactory.getLogger(VertexWriter.class);
 
@@ -210,6 +215,11 @@ public class VertexWriter {
 
     private Vertex processNode(String label, JsonNode jsonObject) {
         Vertex vertex = createVertex(label);
+        if(enableCustomIdentifier){
+            if(jsonObject.has(customPropertyName)) {
+                vertex.property(uuidPropertyName, jsonObject.get(customPropertyName).textValue());
+            }
+        }
         identifyParentOSid(vertex);
 
         jsonObject.fields().forEachRemaining(entry -> {

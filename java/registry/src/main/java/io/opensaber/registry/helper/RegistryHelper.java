@@ -113,6 +113,9 @@ public class RegistryHelper {
     @Value("${signature.enabled}")
     private boolean signatureEnabled;
 
+    @Value("${database.enableSharding}")
+    private boolean enableSharding;
+
     @Autowired
     private EntityTypeHandler entityTypeHandler;
 
@@ -189,6 +192,9 @@ public class RegistryHelper {
             Shard shard = shardManager.getShard(inputJson.get(entityType).get(shardManager.getShardProperty()));
             watch.start("RegistryController.addToExistingEntity");
             String resultId = registryService.addEntity(shard, userId, inputJson);
+            if (!enableSharding) {
+                shard.setShardLabel("");
+            }
             recordId = new RecordIdentifier(shard.getShardLabel(), resultId);
             watch.stop("RegistryController.addToExistingEntity");
             logger.info("AddEntity,{}", recordId.toString());
