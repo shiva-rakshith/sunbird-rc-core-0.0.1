@@ -75,6 +75,14 @@ database:
   #       existing data in the database.
   uuidPropertyName: ${database_uuidPropertyName:osid}
 
+  # Instead of uuid, we can enable to use custom property value as a unique record identifier
+  enableCustomIdentifier: ${database_enableCustomIdentifier:true}
+  customPropertyName: ${database_customPropertyName:participant_code}
+
+  # To enable/disable sharding, If false, shardLabel(example: '1-')
+  # will not be added as prefix to record identifier
+  enableSharding: ${database_enableSharding:false}
+
   # Providers available are NEO4J, SQLG, CASSANDRA, ORIENTDB, TINKERGRAPH (in-memory).
   # NOTE: Values given against 'shardId' must be unique
   provider: ${database_provider:SQLG}
@@ -91,10 +99,6 @@ database:
   # absolute class name of your advisor class.
   # If this property not provided, advisor is set to DefaultShardAdvisor
   shardAdvisorClassName: io.opensaber.registry.sink.shard.DefaultShardAdvisor
-
-  # To enable/disable sharding, If false, shardLabel(example: '1-')
-  # will not be added as prefix to record identifier
-  enableSharding: false
 
   connectionInfo:
     -
@@ -196,7 +200,7 @@ keycloak:
   resource: ${sunbird_sso_client_id:client}
 keycloak-admin:
   client-id: ${sunbird_sso_admin_client_id:admin-api}
-  client-secret: ${sunbird_sso_admin_client_secret:ae85bbf8-27c3-4a45-a283-ac1f428b6223}
+  client-secret: ${sunbird_sso_admin_client_secret:def6a767-9230-49bd-83f1-b93b0affc668}
 keycloak-user:
   default-password: Opensaber@123
 claims:

@@ -192,11 +192,10 @@ public class RegistryHelper {
             Shard shard = shardManager.getShard(inputJson.get(entityType).get(shardManager.getShardProperty()));
             watch.start("RegistryController.addToExistingEntity");
             String resultId = registryService.addEntity(shard, userId, inputJson);
-            if (enableSharding) {
-                recordId = new RecordIdentifier(shard.getShardLabel(), resultId);
-            } else {
-                recordId = new RecordIdentifier("", resultId);
+            if (!enableSharding) {
+                shard.setShardLabel("");
             }
+            recordId = new RecordIdentifier(shard.getShardLabel(), resultId);
             watch.stop("RegistryController.addToExistingEntity");
             logger.info("AddEntity,{}", recordId.toString());
         } catch (Exception e) {
