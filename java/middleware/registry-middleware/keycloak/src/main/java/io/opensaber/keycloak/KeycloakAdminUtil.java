@@ -3,6 +3,7 @@ package io.opensaber.keycloak;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.opensaber.registry.middleware.util.JSONUtil;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -69,7 +70,7 @@ public class KeycloakAdminUtil {
 
     public String createUser(String entityName, String userName, String email, String mobile, JsonNode realmRoles) throws OwnerCreationException, JsonProcessingException {
         logger.info("Creating user with mobile_number : " + userName);
-        List<String> roles = convertJsonNodeToList(realmRoles);
+        List<String> roles = JSONUtil.convertJsonNodeToList(realmRoles);
         UserRepresentation newUser = createUserRepresentation(entityName, userName, email, mobile);
         UsersResource usersResource = keycloak.realm(realm).users();
         Response response = usersResource.create(newUser);
@@ -170,9 +171,5 @@ public class KeycloakAdminUtil {
         keycloak.realm(realm).groups().groups().stream()
                 .filter(g -> g.getName().equals(groupName)).findFirst()
                 .ifPresent(g -> keycloak.realm(realm).users().get(user.getId()).joinGroup(g.getId()));
-    }
-
-    private List<String> convertJsonNodeToList(Object obj){
-        return new ObjectMapper().convertValue(obj, List.class);
     }
 }
