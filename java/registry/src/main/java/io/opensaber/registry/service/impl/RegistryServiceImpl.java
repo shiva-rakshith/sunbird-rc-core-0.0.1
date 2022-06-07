@@ -103,6 +103,9 @@ public class RegistryServiceImpl implements RegistryService {
     @Autowired
     private IAuditService auditService;
 
+    @Value("${database.customIdentifierPropertyName}")
+    private String customIdentifierPropertyName;
+
     public HealthCheckResponse health(Shard shard) throws Exception {
         HealthCheckResponse healthCheck;
         boolean databaseServiceup = shard.getDatabaseProvider().isDatabaseServiceUp();
@@ -196,6 +199,8 @@ public class RegistryServiceImpl implements RegistryService {
 
         if (persistenceEnabled) {
             DatabaseProvider dbProvider = shard.getDatabaseProvider();
+            if(!customIdentifierPropertyName.isEmpty())
+                dbProvider.setCustomIdentifierPropertyName(customIdentifierPropertyName);
             IRegistryDao registryDao = new RegistryDaoImpl(dbProvider, definitionsManager, uuidPropertyName);
             try (OSGraph osGraph = dbProvider.getOSGraph()) {
                 Graph graph = osGraph.getGraphStore();
