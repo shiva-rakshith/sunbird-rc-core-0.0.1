@@ -199,7 +199,8 @@ keycloak-admin:
   client-secret: ${sunbird_sso_admin_client_secret:client_secret}
 keycloak-user:
     default-password: opensaber@123
-    # To add email actions which will be trigger by keycloack
+    # add email actions which will be trigger by keycloack
+    # email details should be configured in keycloak realm settings
     emailActions: ${keycloack_user_email_actions:UPDATE_PASSWORD}
 claims:
   url: ${claims_url:http://localhost:8081}
