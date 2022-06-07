@@ -37,6 +37,7 @@ public class KeycloakAdminUtil {
     private String adminClientId;
     private String authURL;
     private String defaultPassword;
+    private List<String> emailActions;
     private final Keycloak keycloak;
 
     @Autowired
@@ -45,12 +46,14 @@ public class KeycloakAdminUtil {
             @Value("${keycloak-admin.client-secret:}") String adminClientSecret,
             @Value("${keycloak-admin.client-id:}") String adminClientId,
             @Value("${keycloak-user.default-password:}") String defaultPassword,
-            @Value("${keycloak.auth-server-url:}") String authURL) {
+            @Value("${keycloak.auth-server-url:}") String authURL,
+            @Value("${keycloak-user.emailActions:}") List<String> emailActions) {
         this.realm = realm;
         this.adminClientSecret = adminClientSecret;
         this.adminClientId = adminClientId;
         this.authURL = authURL;
         this.defaultPassword = defaultPassword;
+        this.emailActions = emailActions;
         this.keycloak = buildKeycloak();
     }
 
@@ -76,7 +79,8 @@ public class KeycloakAdminUtil {
             String userID = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
             logger.info("User ID : " + userID);
             addRolesToUser(roles, userID);
-            usersResource.get(userID).executeActionsEmail(Arrays.asList("UPDATE_PASSWORD"));
+            if(!emailActions.isEmpty())
+              usersResource.get(userID).executeActionsEmail(emailActions);
             return userID;
         } else if (response.getStatus() == 409) {
             logger.info("UserID: {} exists", userName);
@@ -89,6 +93,10 @@ public class KeycloakAdminUtil {
     }
 
     private void addRolesToUser(List<String> roles, String userID){
+        /** Add the 'view-realm' role to client to access the keycloak roles
+        * Go to Keycloak -> open client(which is configured as client_id in application.yml) ->
+        * Service Account Roles -> Client Roles, select 'realm-management' -> Assign 'view-relam' role
+        */
         if(!roles.isEmpty()) {
             List<RoleRepresentation> roleToAdd = new ArrayList<>();
             for (String role : roles) {
