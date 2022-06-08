@@ -116,6 +116,9 @@ public class RegistryHelper {
     @Value("${database.enableSharding}")
     private boolean enableSharding;
 
+    @Value("${database.customIdentifierPropertyName}")
+    private String customIdentifierPropertyName;
+
     @Autowired
     private EntityTypeHandler entityTypeHandler;
 
@@ -190,6 +193,8 @@ public class RegistryHelper {
         try {
             logger.info("Add api: entity type: {} and shard propery: {}", entityType, shardManager.getShardProperty());
             Shard shard = shardManager.getShard(inputJson.get(entityType).get(shardManager.getShardProperty()));
+            if(!customIdentifierPropertyName.isEmpty())
+                shard.getDatabaseProvider().setCustomIdentifierPropertyName(customIdentifierPropertyName);
             watch.start("RegistryController.addToExistingEntity");
             String resultId = registryService.addEntity(shard, userId, inputJson);
             if (!enableSharding) {
