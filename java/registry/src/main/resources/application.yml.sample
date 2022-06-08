@@ -92,6 +92,15 @@ database:
   # If this property not provided, advisor is set to DefaultShardAdvisor
   shardAdvisorClassName: io.opensaber.registry.sink.shard.DefaultShardAdvisor
 
+  # Instead of uuid, we can enable to use custom property value as a unique record identifier
+  # value will be set to below defined property, passed in request body and the same value will
+  # be used as record identifier
+  customIdentifierPropertyName: ${database_customIdentifierPropertyName:participant_code}
+
+  # To enable/disable sharding, If false, shardLabel(example: '1-')
+  # will not be added as prefix to record identifier
+  enableSharding: ${database_enableSharding:false}
+
   connectionInfo:
     -
       # shardId, shardlabel must be a unique identifier to each connection.
@@ -195,6 +204,9 @@ keycloak-admin:
   client-secret: ${sunbird_sso_admin_client_secret:client_secret}
 keycloak-user:
     default-password: opensaber@123
+    # add email actions which will be trigger by keycloak
+    # email details should be configured in keycloak realm settings
+    emailActions: ${keycloack_user_email_actions:UPDATE_PASSWORD}
 claims:
   url: ${claims_url:http://localhost:8081}
 authentication:
